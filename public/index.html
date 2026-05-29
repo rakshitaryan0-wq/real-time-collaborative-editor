@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REAL-TIME COLLABORATIVE EDITOR</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            background-color: #1e1e2e;
+            color: #cdd6f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+        }
+        header {
+            width: 100%;
+            padding: 15px 30px;
+            background: #181825;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-sizing: border-box;
+            border-bottom: 2px solid #313244;
+        }
+        h1 { margin: 0; font-size: 1.2rem; font-weight: 600; letter-spacing: 1px;}
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+        }
+        .dot { height: 10px; width: 10px; background-color: #f38ba8; border-radius: 50%; display: inline-block; }
+        .dot.connected { background-color: #a6e3a1; }
+        
+        main {
+            width: 100%;
+            max-width: 1000px;
+            flex-grow: 1;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        #editor {
+            width: 100%;
+            height: 100%;
+            background-color: #11111b;
+            color: #a6adc8;
+            border: 1px solid #45475a;
+            border-radius: 8px;
+            padding: 20px;
+            font-family: "Fira Code", monospace;
+            font-size: 16px;
+            line-height: 1.5;
+            resize: none;
+            box-sizing: border-box;
+            outline: none;
+        }
+        #editor:focus { border-color: #89b4fa; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>REAL-TIME COLLABORATIVE EDITOR</h1>
+        <div class="status-indicator">
+            <span class="dot" id="dot"></span>
+            <span id="status-text">Connecting...</span>
+        </div>
+    </header>
+    
+    <main>
+        <textarea id="editor" placeholder="Start typing... your team will see this in real-time."></textarea>
+    </main>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        const editor = document.getElementById('editor');
+        const statusText = document.getElementById('status-text');
+        const dot = document.getElementById('dot');
+        
+        // Flag to prevent an infinite loop of echoing changes
+        let isReceivingUpdate = false;
+
+        // UI Updates for connection status
+        socket.on('connect', () => {
+            statusText.textContent = 'Live';
+            dot.classList.add('connected');
+        });
+
+        socket.on('disconnect', () => {
+            statusText.textContent = 'Offline';
+            dot.classList.remove('connected');
+        });
+
+        // 1. Listen for local user typing and send to server
+        editor.addEventListener('input', () => {
+            if (!isReceivingUpdate) {
+                socket.emit('text-change', editor.value);
+            }
+        });
+
+        // 2. Listen for incoming changes from the server
+        socket.on('text-update', (newText) => {
+            isReceivingUpdate = true;
+            
+            // Save cursor position to prevent jumping when text updates
+            const cursorPosition = editor.selectionStart;
+            
+            editor.value = newText;
+            
+            // Restore cursor position
+            editor.selectionStart = cursorPosition;
+            editor.selectionEnd = cursorPosition;
+            
+            isReceivingUpdate = false;
+        });
+    </script>
+</body>
+</html>

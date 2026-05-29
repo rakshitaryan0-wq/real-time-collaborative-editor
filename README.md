@@ -11,7 +11,7 @@
   * **Network Architecture:** Implement persistent, bi-directional network communication using Socket.IO to broadcast document changes instantly across clients.
   * **Frontend Development:** Create a responsive, distraction-free interface using HTML5, CSS3, and vanilla JavaScript, complete with live connection state management (online/offline).
   * **Version Control:** Establish proper Git practices, including environment management (`.gitignore`), and deploy the clean codebase to GitHub.
-* 
+    
 ---
 
 ## Key Features

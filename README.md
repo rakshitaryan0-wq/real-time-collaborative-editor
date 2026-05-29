@@ -7,10 +7,10 @@
 * **Duration:** One Week
 * **Project Name:** Real-Time Collaborative Editor
 * **Project Objective:** Design and implement a fully functional, real-time collaborative text editing platform from scratch, focusing on a robust client-server architecture to handle concurrent multi-user interactions seamlessly.
-* **Backend Implementation:** Develop a custom backend server using Node.js and Express.js to serve application assets.
-* **Network Architecture:** Implement persistent, bi-directional network communication using Socket.IO to broadcast document changes instantly across clients.
-* **Frontend Development:** Create a responsive, distraction-free interface using HTML5, CSS3, and vanilla JavaScript, complete with live connection state management (online/offline).
-* **Version Control:** Establish proper Git practices, including environment management (`.gitignore`), and deploy the clean codebase to GitHub.
+  * **Backend Implementation:** Develop a custom backend server using Node.js and Express.js to   serve application assets.
+  * **Network Architecture:** Implement persistent, bi-directional network communication using Socket.IO to broadcast document changes instantly across clients.
+  * **Frontend Development:** Create a responsive, distraction-free interface using HTML5, CSS3, and vanilla JavaScript, complete with live connection state management (online/offline).
+  * **Version Control:** Establish proper Git practices, including environment management (`.gitignore`), and deploy the clean codebase to GitHub.
 * 
 ---
 

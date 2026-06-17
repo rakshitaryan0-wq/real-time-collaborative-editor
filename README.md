@@ -63,4 +63,4 @@ node server.js
 ```
 
 **5. Test the collaboration**
-Open `http://localhost:3000` in multiple browser windows, tabs, or separate devices on your network to see the real-time synchronization in action.
+Open `http://localhost:3000/api/items` in multiple browser windows, tabs, or separate devices on your network to see the real-time synchronization in action.
